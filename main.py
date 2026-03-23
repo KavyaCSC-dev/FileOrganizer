@@ -1,6 +1,8 @@
 import os #shows files
 import shutil #actions
 import  sys #CLI
+import json
+from groq import Groq
 
 #functions of os i know listdir==to get list of files
 #os.path.isfile==it checks the selection is file or not
@@ -20,6 +22,41 @@ except IndexError:
 
 if not os.path.exists(folder_path):
     sys.exit("Folder Path Not Found")
+def unknown_file(ext):
+    api=os.getenv("GROQ_API_KEY")
+    groq = Groq(api_key=api)
+
+    response = groq.chat.completions.create(
+        model="openai/gpt-oss-20b",
+        messages=[
+            {"role": "system", "content": "identify extintion of file and organize the file with folder name."},
+            {
+                "role": "user",
+                "content":f"prvode folder name to thise exstintion{ext}.no fancy name keep understandable name",
+            },
+        ],
+        response_format={
+            "type": "json_schema",
+            "json_schema": {
+                "name": "file_extintion",
+                "strict": True,
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "exstintion": {"type": "string"},
+                        "folder_name": {"type": "string"},
+                    },
+                    "required": ["exstintion", "folder_name"],
+                    "additionalProperties": False
+                }
+            }
+        }
+    )
+
+    result = json.loads(response.choices[0].message.content or "{}")
+    #print(json.dumps(result, indent=2))
+    return {result["exstintion"]: result["folder_name"]}
+
 
 def already_existing_file(file,destination_path):
     name,ext=os.path.splitext(file)
@@ -193,6 +230,8 @@ def organize_files(folder_path):
         ".evtx": "logs",
 
     } #mapping generated from claude ai
+    #if ".xyz" in ext_map: i tried it by adding a new file in desktop named test.xyz it created new folder named xyz and placed file there but when i checked dictionary there is no key name .xyz
+    #    print("Key exists")
     with open('log.txt', 'a') as log:  # fully tested and debugged working fine
       for file in files:       #loop to organize files
           source_path = os.path.join(folder_path, file)
@@ -202,9 +241,13 @@ def organize_files(folder_path):
           ext=os.path.splitext(file)[1].lower()#its still complex using os plits the dictionary and fisnd the file using exstintion its like i have dictonary like {"image":".jpeg"} it take index 1 of that means ".jpeg"
           folder_name=ext_map.get(ext)
 
-          if folder_name is None: #uses to unknow type of files to skip them
-              log.write(f'Skipped File:{file}\n')
-              continue
+          if folder_name is None: #uses to unknow type of files to add them with help of ai
+              new_exti=unknown_file(ext) #returns {".xyz":"others"} like something
+              for k,v in new_exti.items(): #separate the both as k (exstintion) v (file_name)
+                  ext_map[k]=v #add to exsisting dict
+              log.write(f'unknown file extintion:{file} added to dict\n ') #logging important to debugging
+              folder_name=v # get new file name and send to next process i mean it will see if folder exisist or create new one
+
 
           destination_path = os.path.join(folder_path, folder_name)#it means folder path i mean c:\\user\\image(created itself or uses exisisting)
 
@@ -254,3 +297,4 @@ organize_files(folder_path)
 #for k,v in dictonary.items():
 #    print(k)
 #    print(v)
+

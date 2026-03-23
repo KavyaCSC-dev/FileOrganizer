@@ -1,0 +1,14 @@
+Already Exisist:dup_rc_view.aspx.html moved as C:\Users\user\Desktop\code\dup_rc_view.aspx(1).html
+Already Exisist:dup_rc_view.html moved as C:\Users\user\Desktop\code\dup_rc_view(1).html
+unknown file extintion:never.xyz added to dict
+ never.xyz Moved to C:\Users\user\Desktop\xyz
+sss.html Moved to C:\Users\user\Desktop\code
+unknown file extintion:~WRL3604.tmp added to dict
+ ~WRL3604.tmp Moved to C:\Users\user\Desktop\tmp
+test.dart Moved to C:\Users\user\Desktop\code
+unknown file extintion:test.unknown added to dict
+ test.unknown Moved to C:\Users\user\Desktop\unk
+unknown file extintion:test.kn added to dict
+ test.kn Moved to C:\Users\user\Desktop\kn files
+unknown file extintion:test2.xyz added to dict
+ test2.xyz Moved to C:\Users\user\Desktop\xyz_files
