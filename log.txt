@@ -1,0 +1,10 @@
+4335385974.pdf Moved to C:\Users\user\Desktop\documents
+aadhar.pdf Moved to C:\Users\user\Desktop\documents
+unknown file extintion:abc.a added to dict
+ abc.a Moved to C:\Users\user\Desktop\source
+image.jpg Moved to C:\Users\user\Desktop\images
+unknown file extintion:tect.xyz added to dict
+ tect.xyz Moved to C:\Users\user\Desktop\xyz_files
+test.cs Moved to C:\Users\user\Desktop\code
+test.jpg Moved to C:\Users\user\Desktop\images
+test.py Moved to C:\Users\user\Desktop\code
