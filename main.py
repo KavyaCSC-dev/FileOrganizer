@@ -64,7 +64,11 @@ def organize_files(folder_path):
                   shutil.move(source_path,new_path)
               log.write(f'Already Exisist:{file} moved as {new_path}\n')
           else:
-              shutil.move(source_path, final_destination_path)
+              try:
+                  os.rename(source_path,final_destination_path)
+              except:
+                  shutil.move(source_path, final_destination_path)
+
               log.write(f"{file} Moved to {destination_path}\n")
 
 
