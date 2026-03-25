@@ -48,7 +48,7 @@ def organize_files(folder_path):
               json.dump(ext_map, Ex_file)
               Ex_file.truncate()
               log.write(f'unknown file extintion:{file} added to dict\n ')
-              folder_name=v
+              folder_name=new_exti
 
           destination_path = os.path.join(folder_path, folder_name)
 
@@ -60,13 +60,13 @@ def organize_files(folder_path):
               new_path=already_existing_file(file,destination_path)
               try:
                   os.rename(source_path,new_path)
-              except:
+              except OSError:
                   shutil.move(source_path,new_path)
               log.write(f'Already Exisist:{file} moved as {new_path}\n')
           else:
               try:
                   os.rename(source_path,final_destination_path)
-              except:
+              except OSError:
                   shutil.move(source_path, final_destination_path)
 
               log.write(f"{file} Moved to {destination_path}\n")
