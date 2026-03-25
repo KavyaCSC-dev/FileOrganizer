@@ -42,13 +42,15 @@ def organize_files(folder_path):
 
           if folder_name is None:
               new_exti=unknown_file(ext)
+
               for k,v in new_exti.items():
                   ext_map[k]=v
+
               Ex_file.seek(0)
               json.dump(ext_map, Ex_file)
               Ex_file.truncate()
               log.write(f'unknown file extintion:{file} added to dict\n ')
-              folder_name=new_exti
+              folder_name=v
 
           destination_path = os.path.join(folder_path, folder_name)
 

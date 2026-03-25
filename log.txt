@@ -1,0 +1,23 @@
+aa.pdf Moved to C:\Users\user\Desktop\documents
+asa.html Moved to C:\Users\user\Desktop\code
+asw.jpg Moved to C:\Users\user\Desktop\images
+unknown file extintion:blank.blank added to dict
+ unknown file extintion:blank.blank added to dict
+ blank.blank Moved to C:\Users\user\Desktop\BlankFiles
+blank.pdf Moved to C:\Users\user\Desktop\documents
+Already Exisist:dup_rc_view.aspx.html moved as C:\Users\user\Desktop\code\dup_rc_view.aspx(2).html
+RATION.pdf Moved to C:\Users\user\Desktop\documents
+shankaraadhar.pdf Moved to C:\Users\user\Desktop\documents
+suhasaadhar.pdf Moved to C:\Users\user\Desktop\documents
+WhatsApp Image 2026-03-25 at 12.17.05.jpeg Moved to C:\Users\user\Desktop\images
+unknown file extintion:new.kg added to dict
+ unknown file extintion:new.kg added to dict
+ new.kg Moved to C:\Users\user\Desktop\Kg_No_Files
+unknown file extintion:pan.pan added to dict
+ pan.pan Moved to C:\Users\user\Desktop\Pan Files
+unknown file extintion:quick.glance added to dict
+ quick.glance Moved to C:\Users\user\Desktop\GlanceNo
+unknown file extintion:pick.wx added to dict
+ pick.wx Moved to C:\Users\user\Desktop\wxno_files
+unknown file extintion:test.dump added to dict
+ test.dump Moved to C:\Users\user\Desktop\dump_files
