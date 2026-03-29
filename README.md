@@ -1,208 +1,135 @@
-# 🗂️ FileOrganizer
+# 📁 FileOrganizer
 
-![Python](https://img.shields.io/badge/Python-100%25-blue?logo=python&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-green)
-![Status](https://img.shields.io/badge/Status-Active-brightgreen)
-![LLM](https://img.shields.io/badge/LLM-Groq-orange)
-
-> A fast and lightweight Python CLI tool that automatically organizes your messy folders by sorting files into categorized subfolders based on their extension — with **AI-powered handling for unknown file types**.
+A smart Python-based file organizer that automatically sorts files into folders based on their extensions. Includes AI-powered handling for unknown file types and an undo system to revert changes.
 
 ---
 
-## 📋 Table of Contents
+## 🚀 Features
 
-- [Features](#-features)
-- [What's New](#-whats-new)
-- [Installation](#-installation)
-- [Usage](#-usage)
-- [How It Works](#-how-it-works)
-- [Supported File Types](#-supported-file-types)
-- [AI Support](#-ai-support-for-unknown-extensions)
-- [Logging](#-logging)
-- [Project Structure](#-project-structure)
-- [Contributing](#-contributing)
-- [Author](#-author)
+* 📂 Organizes files by extension (e.g., `.jpg → Images/`)
+* 🤖 AI-powered detection for unknown file types (via Groq API)
+* 📝 Logs all file movements (`log.txt`)
+* 🔄 Undo last operation using log history
+* ⚠️ Handles duplicate file names safely
+* 📦 JSON-based extension mapping (`data.json`)
 
 ---
 
-## ✨ Features
+## 🛠️ Tech Stack
 
-- 📁 **Auto Categorization** — Sorts files into folders by type (images, code, documents, etc.)
-- 🔁 **Duplicate File Handling** — Renames duplicates safely without overwriting anything
-- 📂 **Auto Folder Creation** — Creates category folders automatically if they don't exist
-- 🤖 **AI-Powered Unknown Extensions** — Uses Groq LLM to decide the best folder for unrecognized file types and remembers them for next time
-- ↩️ **Undo Support** — Reverse the last organize operation with a single flag
-- 📝 **Logging** — Every file move is recorded in `log.txt` for full transparency
-- ⚡ **Fast & Lightweight** — Pure Python, minimal dependencies
+* Python
+* OS & Shutil (file handling)
+* JSON (data storage)
+* Groq API (AI classification)
 
 ---
 
-## 🆕 What's New
+## 📦 Project Structure
 
-### v1.2 — Undo Support *(Latest)*
-- New `--undo` flag to reverse the last organize operation
-- All file moves are logged in `source->destination` format for accurate reversal
-- Safely skips malformed or empty log lines
-
-### v1.1 — AI Support for Unknown Extensions
-- Unknown file extensions are now handled by **Groq LLM** — it decides the best folder name
-- New extension-to-folder mappings are **saved back to `data.json`** automatically so the AI is only called once per extension
-- Improved logging captures AI-assisted decisions separately
-
-### v1.0 — Initial Release
-- Core file organization by extension
-- Auto folder creation
-- Duplicate file safety with rename logic
-- Basic logging
+```
+FileOrganizer/
+│
+├── main.py            # Main execution script
+├── utilities.py       # Helper functions
+├── data.json          # Extension → Folder mapping
+├── log.txt            # Operation logs
+├── requirements.txt   # Dependencies
+└── README.md
+```
 
 ---
 
-## 🚀 Installation
+## ⚙️ Installation
 
-### Prerequisites
-- Python 3.8+
-- A [Groq API key](https://console.groq.com) (free)
-
-### Clone the Repository
+1. Clone the repository:
 
 ```bash
-git clone https://github.com/UnKnown-4656/FileOrganizer.git
+git clone https://github.com/your-username/FileOrganizer.git
 cd FileOrganizer
 ```
 
-### Install Dependencies
+2. Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### Set Your API Key
-
-On Windows (PowerShell):
-```powershell
-$env:GROQ_API_KEY="your_key_here"
-```
-
-On Mac/Linux:
-```bash
-export GROQ_API_KEY="your_key_here"
-```
-
----
-
-## 🛠️ Usage
+3. Set your API key (for AI feature):
 
 ```bash
-python main.py <folder_path>
+set GROQ_API_KEY=your_api_key   # Windows
+export GROQ_API_KEY=your_api_key  # Linux/Mac
 ```
 
-**Organize:**
+---
+
+## ▶️ Usage
+
+### Organize Files
+
 ```bash
-python main.py C:\Users\user\Desktop\MessyFolder
+python main.py "C:\Your\Folder\Path"
 ```
 
-**Undo last organize:**
+### Undo Last Operation
+
 ```bash
-python main.py C:\Users\user\Desktop\MessyFolder --undo
+python main.py "C:\Your\Folder\Path" --undo
 ```
 
 ---
 
-## ⚙️ How It Works
+## 🧠 How It Works
 
-```
-📁 Messy Folder
-├── photo.jpg        →   📁 images/
-├── report.pdf       →   📁 documents/
-├── script.py        →   📁 code/
-├── song.mp3         →   📁 music/
-└── unknown.xyz      →   🤖 Groq decides → 📁 misc/
-```
+1. Reads all files in the given directory
+2. Checks extension from `data.json`
+3. If unknown:
 
-1. Scans all files in the target folder (top level)
-2. Looks up each file extension in `data.json`
-3. If extension is unknown → asks Groq LLM for the best folder name → saves it to `data.json`
-4. Creates destination folder if it doesn't exist
-5. Moves the file safely, renaming if a duplicate exists
-6. Logs every action to `log.txt`
-7. Run with `--undo` to reverse all moves from the log
+   * Calls AI model to suggest folder name
+   * Updates `data.json` automatically
+4. Moves file to corresponding folder
+5. Logs every move for undo functionality
 
 ---
 
-## 📂 Supported File Types
+## 🔁 Undo System
 
-Built-in mappings are stored in `data.json`. Default categories include:
-
-| Category   | Extensions                                                  |
-|------------|-------------------------------------------------------------|
-| Images     | `.jpg`, `.jpeg`, `.png`, `.gif`, `.bmp`, `.svg`, `.webp`   |
-| Videos     | `.mp4`, `.mkv`, `.avi`, `.mov`, `.wmv`, `.flv`             |
-| Music      | `.mp3`, `.wav`, `.flac`, `.aac`, `.ogg`                    |
-| Documents  | `.pdf`, `.docx`, `.doc`, `.txt`, `.xlsx`, `.pptx`          |
-| Archives   | `.zip`, `.rar`, `.tar`, `.gz`, `.7z`                       |
-| Code       | `.py`, `.js`, `.html`, `.css`, `.java`, `.cpp`, `.cs`      |
-| Unknown    | Anything else → **handled by Groq AI** 🤖                  |
+* Uses `log.txt` to track operations
+* `--undo` restores files to original location
+* Automatically removes empty folders
 
 ---
 
-## 🤖 AI Support for Unknown Extensions
+## ⚠️ Notes
 
-When FileOrganizer encounters a file with an unrecognized extension, it sends the extension to **Groq's LLM** which returns an appropriate folder name.
-
-That mapping is then **saved permanently to `data.json`** — so the next time the same extension appears, no API call is needed.
-
-```
-Unknown extension: .blend
-Groq response: { "extension": ".blend", "folder_name": "design_files" }
-Saved to data.json ✓
-```
-
-> Requires a valid `GROQ_API_KEY` environment variable.
+* Ensure `data.json` exists and is valid JSON
+* AI feature requires internet + API key
+* Works best on non-system directories
 
 ---
 
-## 📝 Logging
+## 💡 Future Improvements
 
-All operations are recorded in `log.txt`:
-
-```
-C:\Desktop\MessyFolder\photo.jpg->C:\Desktop\MessyFolder\images\photo.jpg
-C:\Desktop\MessyFolder\report.pdf->C:\Desktop\MessyFolder\documents\report.pdf
-```
-
-Each line follows `source->destination` format, used by the `--undo` flag to reverse moves.
-
----
-
-## 📁 Project Structure
-
-```
-FileOrganizer/
-├── main.py           # Core logic — scanning, organizing, moving files
-├── utilities.py      # Helper functions — AI lookup, duplicate renaming
-├── data.json         # Extension-to-folder mappings (auto-updated)
-├── log.txt           # Auto-generated operation log
-├── requirements.txt  # Dependencies
-└── README.md         # You are here
-```
+* GUI version (Tkinter / Web UI)
+* Batch undo support
+* File preview before organizing
+* Configurable rules
+* Performance optimization for large folders
 
 ---
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create a new branch: `git checkout -b feature/your-feature`
-3. Commit your changes: `git commit -m "Add your feature"`
-4. Push and open a Pull Request
+Feel free to fork and improve this project!
 
 ---
 
-## 👨‍💻 Author
+## 📜 License
 
-**UnKnown** — [@UnKnown-4656](https://github.com/UnKnown-4656)
-
-> Built with ❤️ — because no one should manually sort their Downloads folder.
+MIT License (recommended)
 
 ---
 
-*⭐ If this helped you, drop a star on GitHub!*
+## 🔥 Author
+
+Unknown-4656
