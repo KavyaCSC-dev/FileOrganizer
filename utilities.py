@@ -3,6 +3,7 @@ import json
 import shutil
 from groq import Groq
 
+
 def unknown_file(ext):
     api=os.getenv("GROQ_API_KEY")
     groq = Groq(api_key=api)
@@ -49,19 +50,22 @@ def already_existing_file(file,destination_path):
     return new_path
 
 def undo_function():
-   with open("log.txt", "r") as log:
-    log=log.readlines()
-    for undo in log[-1]:
-        if not "->" in undo:
-            continue
+   with open("log.txt", "r+") as log:
+     logs=log.readlines()
+     last_break_index=-1
+     for index,line in enumerate(logs):
+         if "--BREAK--" in line:
+             last_break_index=index
+     processed_log=logs[last_break_index+1:]
+     for line in processed_log:
+         if "->" in line:
+             source, destination = line.strip().split("->")
+             try:
+                 os.rename(destination, source)
+             except OSError:
+                 shutil.move(destination, source)
 
-        if "--BREAK--" in undo:
-            if "->" in undo:
-                source, destination = undo.strip().split("->")
-
-        try:
-            os.rename(destination, source)
-        except OSError:
-            shutil.move(destination, source)
-
+             folder_path=os.path.dirname(destination)
+             if not os.listdir(folder_path):
+                 os.rmdir(folder_path)
 

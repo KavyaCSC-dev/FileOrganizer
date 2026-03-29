@@ -35,6 +35,7 @@ class FileOrganizer:
         with open('log.txt', 'a') as log:
          with open('data.json', 'r+') as Ex_file:
           ext_map = json.load(Ex_file)
+          log.write("--BREAK--\n")
           for file in files:
               source_path = os.path.join(self.folder_path, file)
               if not os.path.isfile(source_path):
@@ -72,7 +73,6 @@ class FileOrganizer:
                       os.rename(source_path,final_destination_path)
                   except OSError:
                       shutil.move(source_path, final_destination_path)
-                  log.write("--BREAK--\n")
                   log.write(f"{source_path}->{final_destination_path}\n")
 
 
