@@ -1,6 +1,1 @@
---BREAK--
-C:\Users\user\Desktop\PC Advisor\main.py->C:\Users\user\Desktop\PC Advisor\code\main.py
-C:\Users\user\Desktop\PC Advisor\NVIDIA Corporation (NVDA) Stock Historical Prices & Data - Yahoo Finance.html->C:\Users\user\Desktop\PC Advisor\code\NVIDIA Corporation (NVDA) Stock Historical Prices & Data - Yahoo Finance.html
---BREAK--
-C:\Users\user\Desktop\PC Advisor\main.py->C:\Users\user\Desktop\PC Advisor\code\main.py
-C:\Users\user\Desktop\PC Advisor\NVIDIA Corporation (NVDA) Stock Historical Prices & Data - Yahoo Finance.html->C:\Users\user\Desktop\PC Advisor\code\NVIDIA Corporation (NVDA) Stock Historical Prices & Data - Yahoo Finance.html
+
